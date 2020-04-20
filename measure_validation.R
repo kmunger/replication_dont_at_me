@@ -15,6 +15,22 @@ agg_thresholds<-c(.295, .405)
 agreement<-filter(validation_tweets, Agreement == "Yes")
 
 
+######################################################
+
+
+#### Confusion Matrices in Appendix C
+
+#####################################################
+
+
+##70th percentile
+table(as.factor(agreement$Answer1), agreement$scores< agg_thresholds[1]) / length(agreement$X)
+
+
+
+##75th percentile
+table(as.factor(agreement$Answer1), agreement$scores< agg_thresholds[2]) / length(agreement$X)
+
 
   ###validate for real
 acc<-NULL

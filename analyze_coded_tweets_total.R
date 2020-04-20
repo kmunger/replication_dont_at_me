@@ -34,6 +34,9 @@ dev.off()
 
 
 ###this is for the number of tweets above a threshold
+subjects_active_anonymized$pre_total<-rep(0, length(subjects_active_anonymized$treatment))
+subjects_active_anonymized$post_total<-rep(0, length(subjects_active_anonymized$treatment))
+
 subjects_active_anonymized$pre_aggtweets<-rep(0, length(subjects_active_anonymized$treatment))
 subjects_active_anonymized$post_aggtweets_1<-rep(0, length(subjects_active_anonymized$treatment))
 subjects_active_anonymized$post_aggtweets_3<-rep(0, length(subjects_active_anonymized$treatment))
@@ -67,6 +70,7 @@ subjects_active_anonymized$post_aggtweets_43_ex<-rep(0, length(subjects_active_a
     #before
     pre<-filter(apropos, days_after <0 & days_after > -90)
     subjects_active_anonymized$pre_aggtweets[i]<- length(which(pre$aggression > agg_thresholds[1]))
+    subjects_active_anonymized$pre_total[i]<- length((pre$aggression))
     
     #1 day after
     post1<-filter(apropos, days_after ==1)
@@ -99,6 +103,8 @@ subjects_active_anonymized$post_aggtweets_43_ex<-rep(0, length(subjects_active_a
     #43 days after
     post43<-filter(apropos, days_after > 0 & days_after< 44)
     subjects_active_anonymized$post_aggtweets_43[i]<-length(which(post43$aggression > agg_thresholds[1]))
+    subjects_active_anonymized$post_total[i]<- length((post43$aggression))
+    
     
     #28 days after exclusive
     post28_ex<-filter(apropos, days_after > 14 & days_after< 29)
@@ -125,6 +131,45 @@ subjects_active_anonymized$post_aggtweets_43_ex<-rep(0, length(subjects_active_a
   
   
   save(subjects_active_anonymized, file = "subjects_70th.RData")
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ###################  ###################  ###################  ###################  ###################
+  ####calculate proporations in Table 1
+  ###################  ###################  ###################  ###################  ###################
+  
+  
+  #pre-treatment total
+  summary(subjects_active_anonymized$pre_total)
+  
+  
+  
+  # pre-treatment uncivil
+  summary(subjects_active_anonymized$pre_aggtweets)
+  
+  
+  #post-treatment total
+  summary(subjects_active_anonymized$post_total)
+  
+  #post-treatment uncivil
+  summary(subjects_active_anonymized$post_aggtweets_43)
+  
+  #pre-treatment uncivil by partisanship
+  summary(subjects_active_anonymized$pre_aggtweets[subjects_active_anonymized$rightist==1])
+  summary(subjects_active_anonymized$pre_aggtweets[subjects_active_anonymized$leftist==1])  
+  
+  
+  
 
   ###################  ###################  ###################  ###################  ###################
   ### civil tweets
@@ -226,16 +271,13 @@ subjects_active_anonymized$post_aggtweets_43_ex<-rep(0, length(subjects_active_a
   save(subjects_active_anonymized, file = "subjects_civil.RData")
   
   
-  ###################  ###################  ###################  ###################  ###################
-  ####calculate proporations in Table 1
-  ###################  ###################  ###################  ###################  ###################
-  summary(subjects_active_anonymized$pre_aggtweets)
+
   
-  summary(subjects_active_anonymized$pre_civiltweets)
-  summary(subjects_active_anonymized$post_aggtweets_43)
   
-  summary(subjects_active_anonymized$pre_aggtweets[subjects_active_anonymized$rightist==1])
-  summary(subjects_active_anonymized$pre_aggtweets[subjects_active_anonymized$leftist==1])
+  
+  
+  
+  
   
   
   ###################  ###################  ###################  ###################  ###################
@@ -335,4 +377,7 @@ subjects_active_anonymized$post_aggtweets_43_ex<-rep(0, length(subjects_active_a
   
   
   save(subjects_active_anonymized, file = "subjects_90th.RData")
+  
+  
+  
   
